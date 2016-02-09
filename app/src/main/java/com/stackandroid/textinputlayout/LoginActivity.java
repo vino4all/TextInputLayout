@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -40,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextInputLayout mInputLayoutEmail;
+    private TextInputLayout mInputLayoutPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mInputLayoutEmail = (TextInputLayout) findViewById(R.id.text_input_email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        mInputLayoutPassword = (TextInputLayout) findViewById(R.id.text_input_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -84,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Reset errors.
         mEmailView.setError(null);
+        mInputLayoutEmail.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
@@ -102,11 +108,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mInputLayoutEmail.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mInputLayoutEmail.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }
